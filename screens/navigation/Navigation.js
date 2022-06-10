@@ -5,6 +5,7 @@ import Login1 from "../login/Login";
 import Tab from "../requests/Requests";
 // import Group from "../group/Group";
 import { useSelector } from "react-redux";
+import Groups from "../Usergroup/Usergroup";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,8 @@ const StackNavigation = () => {
         />
 
         <Stack.Screen name="Request" component={Tab} />
+        <Stack.Screen name="Usergroup" component={Groups} />
+
         {/* <Stack.Screen name="Group" component={Group} /> */}
        
       </Stack.Navigator>

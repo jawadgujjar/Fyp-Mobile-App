@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View,StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Card, List,Badge } from "react-native-paper";
+import { Card, Badge } from "react-native-paper";
 // import Pro from '../profile/Profile';
 
 function HomeScreen() {
@@ -25,12 +25,19 @@ function Profile({navigation}) {
   const onPress =()=>{
     navigation.navigate('Request')
   }
+
+  const onPress1 =()=>{
+    navigation.navigate('Usergroup')
+  }
   return (
     <View  > 
            <View>
               <Card style={styles.card1} >
-            <List.Item  />          
-            <Text  style={styles.request} onPress={onPress}>  Requests</Text><Badge style={styles.badge} >3</Badge>
+            <Text  style={styles.request} onPress={onPress}> Requests</Text><Badge style={styles.badge} >3</Badge>
+            </Card>
+
+            <Card style={styles.card1} >
+            <Text  style={styles.request} onPress={onPress1}> Group</Text> 
             </Card>
           </View>  
     </View>
@@ -54,9 +61,10 @@ card1:{
   width:350,
   marginTop:30,
   marginLeft:5 ,
+  alignContent:'center',
 },
 request:{
- marginTop:-40,
+ marginTop:10,
  marginLeft:20,
  fontSize:20,
  fontWeight:'bold',

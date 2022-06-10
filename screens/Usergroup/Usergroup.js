@@ -8,9 +8,9 @@ import {
   RefreshControl
 } from "react-native";
 import { Card } from "react-native-paper";
-import { requests, users } from "../../config/axios";
+import {  groups } from "../../config/axios";
 import { useSelector } from "react-redux";
-import { TouchableOpacity } from "react-native-gesture-handler";
+ 
 
   
 const wait = timeout => {
@@ -20,16 +20,25 @@ const wait = timeout => {
 const ShowUserCard = (props) => {
   const authToken = useSelector((state) => state.user.authToken);
   const [student, setstudent] = useState({});
+  const user = useSelector((state) => state.user.user);
+
 
 
 
   useEffect(() => {
-    users(`/${props.sendto}`, {
-      method: "get",
+    setloading(true);
 
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
+    groups( {
+        method: "get",
+        data : {
+            groupid: "",
+            groupstudents:[`${student._id}`,`${user._id}`],
+            groupsupervisor:"",
+        },
+  
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
     })
       .then((res) => {
         setstudent(res.data);
@@ -37,31 +46,10 @@ const ShowUserCard = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [refreshing]);
 
   // 
-  const onCancelrequest = () => {
-
-    requests(`/${props?.requestid}`, {
-      method: "delete",
-
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-
-    })
-    
-      .then(() => {
-        props?.callrefresh(!props?.refresh)
-
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
  
-  };
-
   // 
 
   return (
@@ -76,21 +64,14 @@ const ShowUserCard = (props) => {
             <Text>
               {student?.degree} {student?.department}
             </Text>
-          </View>
-
-          <View >
-            
-            <TouchableOpacity onPress={ onCancelrequest} style={{backgroundColor:"#DF1B32",padding:5,borderRadius:5}}>
-              <Text style={{color:"white"}}>Cancel Request </Text>
-            </TouchableOpacity>
-          </View>
+          </View>          
         </View>
       </Card>
     </View>
   );
 };
 
-function SentReq() {
+function Groups() {
   const authToken = useSelector((state) => state.user.authToken);
   const user = useSelector((state) => state.user.user);
 
@@ -105,28 +86,28 @@ function SentReq() {
 
 
 
-  useEffect(() => {
-    setloading(true);
-    requests({
-      method: "get",
-      params: {
-        sentby: user._id,
-      },
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-      .then((res) => {
-        setdata(res.data.data);
-        setloading(false);
-        setRefreshing(false);
+//   useEffect(() => {
+//     setloading(true);
+//     requests({
+//       method: "get",
+//       params: {
+//         sentby: user._id,
+//       },
+//       headers: {
+//         Authorization: `Bearer ${authToken}`,
+//       },
+//     })
+//       .then((res) => {
+//         setdata(res.data.data);
+//         setloading(false);
+//         setRefreshing(false);
 
-      })
-      .catch((err) => {
-        console.log(err);
-        setloading(false);
-      });
-  }, [refresh,refreshing]);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         setloading(false);
+//       });
+//   }, [refresh,refreshing]);
 
   return (
     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} >
@@ -139,12 +120,12 @@ function SentReq() {
           {data.length === 0 ? (
             <View>
               <Text style={{ textAlign: "center" }}>
-                You don't have any requests
+                You don't have any Group
               </Text>
             </View>
           ) : (
             <ScrollView  >
-              {data.map((user, index) => (
+              {data.map((user, index,) => (
                 <ShowUserCard key={index} refresh={refresh} callrefresh={setrefresh} sendto={user?.sendto} requestid={user?._id} />
               ))}
             </ScrollView>
@@ -156,5 +137,5 @@ function SentReq() {
 
   );
 }
-export default SentReq;
+export default Groups;
 const styles = StyleSheet.create({});

@@ -19,7 +19,7 @@ const ShowUserCard = (props) => {
 
 
   useEffect(() => {
-    users(`/${props.sentby}`, {
+    users(`/${props.sentby}`,{
       method: "get",
 
       headers: {
@@ -75,7 +75,29 @@ const ShowUserCard = (props) => {
 
  
   };
-  // 
+  //
+  const onRejectrequest = () => {
+
+    requests(`/${props?.requestid}`, {
+      method: "delete",
+
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+
+    })
+    
+      .then(() => {
+        props?.callrefresh(!props?.refresh)
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+ 
+  };
+  //  
   
 
   return (
@@ -96,7 +118,7 @@ const ShowUserCard = (props) => {
             <TouchableOpacity onPress={ onGroupcreate} style={{backgroundColor:"#6DE039",padding:5,borderRadius:5}}>
               <Text style={{color:"white"}}>Accept</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>alert("Reject Clicked")} style={{backgroundColor:"#DF1B32",padding:5,borderRadius:5}}>
+            <TouchableOpacity onPress={onRejectrequest} style={{backgroundColor:"#DF1B32",padding:5,borderRadius:5}}>
               <Text style={{color:"white"}}>Reject</Text>
             </TouchableOpacity>
           </View>
@@ -150,7 +172,7 @@ function Req() {
           ) : (
             <ScrollView>
               {data.map((user, index) => (
-                <ShowUserCard key={index} requestid={user?._id} refresh={refresh} callrefresh={setrefresh} sentby={user?.sentby} />
+                <ShowUserCard key={index} requestid={user?._id} refresh={refresh} callrefresh={setrefresh} sentby={user?.sentby}  />
               ))}
             </ScrollView>
           )}
