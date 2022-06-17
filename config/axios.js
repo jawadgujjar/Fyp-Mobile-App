@@ -51,17 +51,6 @@ groups.interceptors.request.use(
 );
 
 
-// const cancel = axios.create({
-//   baseURL: `${url}cancel`,
-// });
-// groups.interceptors.request.use(
-//   (req) => {
-//     return req;
-//   },
-//   (err) => {
-//     return Promise.reject(err);
-//   }
-// );
 
 
 

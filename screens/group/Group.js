@@ -6,17 +6,19 @@ import {
     StyleSheet,
      
   } from "react-native";
+  import { useSelector } from "react-redux";
 
-  function Group() {
+   
+    
+  const ShowUserCard = (props) => {
+    const authToken = useSelector((state) => state.user.authToken);
     const [student, setstudent] = useState({});
-
-  const authToken = useSelector((state) => state.user.authToken);
-  const user = useSelector((state) => state.user.user);
-
-  const [data, setdata] = useState([]);
-  const [loading, setloading] = useState(false);
+    const user = useSelector((state) => state.user.user);
+    const [loading, setloading] = useState(false);
+    const [groupData, setGroupData] = useState({});
 
   useEffect(() => {
+  
     setloading(true);
     group({
       method: "get",
@@ -30,7 +32,11 @@ import {
       },
     })
       .then((res) => {
-       console.log("first")
+       if(res.data){
+         setGroupData(res.data)
+       }else{
+         console.log('No Data')
+       }
       })
       .catch((err) => {
         console.log(err);
@@ -38,13 +44,35 @@ import {
       });
   }, []);
 
-  return (
-    <View style={styles.main}>
+
+return (
+  <View>
+    <Card
+      style={{ backgroundColor: "transparent", padding: 20, marginBottom: 5 }}
+    >
+      <View style={{ flexDirection:"row", justifyContent: "space-between",alignItems:"center" }}>
+        <View>
+          <Text>Name: {student?.fullName}</Text>
+          <Text>Roll No: {student?.rollNumber}</Text>
+          <Text>
+            {student?.degree} {student?.department}
+          </Text>
+        </View>          
+      </View>
+    </Card>
+  </View>
+);
+};
+
+  export const Group1 = () => {
+    
+    return (
+      <View style={styles.main}>
       {loading ? (
         <ActivityIndicator size="large" color="black" />
       ) : (
         <View>
-          {data.length === 0 ? (
+          { (groupData && groupData?.length === 0) ? (
             <View>
               <Text style={{ textAlign: "center" }}>
                 You don't have any requests
@@ -52,29 +80,18 @@ import {
             </View>
           ) : (
             <ScrollView>
-              {data.map((user, index) => (
-                <ShowUserCard key={index} sentby={user?.sentby} />
+              {groupData?.map((item, index) => (
+                <ShowUserCard key={index} sentby={item?.sentby} />
               ))}
             </ScrollView>
           )}
         </View>
       )}
     </View>
-  );
-}
-
-  function Group1() {
-    
-    return (
-        <View>
-           <Text style={{ textAlign: "center" }}>Your group is created!</Text>
-           
-        </View>
 
 
         );
     }
-    export default Group1;
     const styles = StyleSheet.create({
 
 
