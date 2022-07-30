@@ -54,19 +54,11 @@ const ShowUserCard = (props) => {
       .then((res) => {
         let editeduser = {
           groupid: res.data._id,
-          degree: user.degree,
-          department: user.department,
-          fullName: user.fullName,
-          email: user.email,
-          role: user.role,
-          rollNumber: user.rollNumber,
-          section: user.section,
-          subjects: user.subjects,
-          _id: user._id,
+          
         };
 
         users(`/${user._id}`, {
-          method: "put",
+          method: "patch",
           data: editeduser,
           headers: {
             Authorization: `Bearer ${authToken}`,
