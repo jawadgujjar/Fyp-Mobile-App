@@ -7,19 +7,21 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Card } from "react-native-paper";
-import { requests, users,groups } from "../../config/axios";
+import { requests, users, groups } from "../../config/axios";
 import { useSelector } from "react-redux";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/user";
 
 const ShowUserCard = (props) => {
+  const dispatch = useDispatch();
+
   const authToken = useSelector((state) => state.user.authToken);
   const user = useSelector((state) => state.user.user);
-
   const [student, setstudent] = useState({});
 
-
   useEffect(() => {
-    users(`/${props.sentby}`,{
+    users(`/${props.sentby}`, {
       method: "get",
 
       headers: {
@@ -34,78 +36,77 @@ const ShowUserCard = (props) => {
       });
   }, []);
 
-  // 
- 
+  //
+
   const onGroupcreate = () => {
-
-
-
-    groups( {
+    groups({
       method: "post",
 
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
-      data :{
-        groupid:"",groupstudents:[`${student._id}`,`${user._id}`],groupsupervisor:""
-      }
+      data: {
+        groupid: "",
+        groupstudents: [`${student._id}`, `${user._id}`],
+        groupsupervisor: "",
+      },
     })
-      .then(() => {
-
-        requests(`/${props?.requestid}`,{
-          method: "delete",
+      .then((res) => {
+        let editeduser = {
+          groupid: res.data._id,
           
+        };
+
+        users(`/${user._id}`, {
+          method: "patch",
+          data: editeduser,
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
         })
           .then((res) => {
-            console.log(res.data)
-            props?.callrefresh(!props?.refresh)
+            dispatch(setUser(res.data));
+            props?.callrefresh(!props?.refresh);
+            onRejectrequest()
           })
           .catch((err) => {
             console.log(err);
           });
-       
       })
       .catch((err) => {
         console.log(err);
       });
-
-
- 
   };
   //
   const onRejectrequest = () => {
-
     requests(`/${props?.requestid}`, {
       method: "delete",
 
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
-
     })
-    
       .then(() => {
-        props?.callrefresh(!props?.refresh)
-
+        props?.callrefresh(!props?.refresh);
       })
       .catch((err) => {
         console.log(err);
       });
-
- 
   };
-  //  
-  
+  //
 
   return (
     <View>
       <Card
         style={{ backgroundColor: "transparent", padding: 20, marginBottom: 5 }}
       >
-        <View style={{ flexDirection:"row", justifyContent: "space-between",alignItems:"center" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <View>
             <Text>Name: {student?.fullName}</Text>
             <Text>Roll No: {student?.rollNumber}</Text>
@@ -114,12 +115,32 @@ const ShowUserCard = (props) => {
             </Text>
           </View>
 
-          <View style={{flexDirection:"column",justifyContent:"space-between",height:70}}>
-            <TouchableOpacity onPress={ onGroupcreate} style={{backgroundColor:"#6DE039",padding:5,borderRadius:5}}>
-              <Text style={{color:"white"}}>Accept</Text>
+          <View
+            style={{
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: 70,
+            }}
+          >
+            <TouchableOpacity
+              onPress={onGroupcreate}
+              style={{
+                backgroundColor: "#6DE039",
+                padding: 5,
+                borderRadius: 5,
+              }}
+            >
+              <Text style={{ color: "white" }}>Accept</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={onRejectrequest} style={{backgroundColor:"#DF1B32",padding:5,borderRadius:5}}>
-              <Text style={{color:"white"}}>Reject</Text>
+            <TouchableOpacity
+              onPress={onRejectrequest}
+              style={{
+                backgroundColor: "#DF1B32",
+                padding: 5,
+                borderRadius: 5,
+              }}
+            >
+              <Text style={{ color: "white" }}>Reject</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -134,7 +155,7 @@ function Req() {
 
   const [data, setdata] = useState([]);
   const [loading, setloading] = useState(false);
-  const [refresh, setrefresh] = useState(false)
+  const [refresh, setrefresh] = useState(false);
 
   useEffect(() => {
     setloading(true);
@@ -172,7 +193,13 @@ function Req() {
           ) : (
             <ScrollView>
               {data.map((user, index) => (
-                <ShowUserCard key={index} requestid={user?._id} refresh={refresh} callrefresh={setrefresh} sentby={user?.sentby}  />
+                <ShowUserCard
+                  key={index}
+                  requestid={user?._id}
+                  refresh={refresh}
+                  callrefresh={setrefresh}
+                  sentby={user?.sentby}
+                />
               ))}
             </ScrollView>
           )}
