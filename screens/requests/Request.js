@@ -48,6 +48,7 @@ const ShowUserCard = (props) => {
       data: {
         groupid: "",
         groupstudents: [`${student._id}`, `${user._id}`],
+        
         groupsupervisor: "",
       },
     })

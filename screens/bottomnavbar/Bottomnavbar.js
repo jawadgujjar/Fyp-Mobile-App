@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View,StyleSheet,Image} from 'react-native';
+import { Text, View,StyleSheet,Image,ScrollView,SafeAreaView} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Card, Badge } from "react-native-paper";
 import Count from '../countdown/Countdown';
@@ -21,8 +21,15 @@ function HomeScreen({navigation}) {
   const onPress4=()=>{
     navigation.navigate('Fdefence')
   }
+  const onPress5=()=>{
+    navigation.navigate('Supervisorscreen')
+  }
   return (
+     
     <View >
+      <ScrollView>
+        <SafeAreaView>
+       
       <Card style={styles.supervisor} >
             <Text  style={styles.supervisortxt} onPress={onPress}> Select supervisor</Text> 
             <Text  style={styles.time} >  Time Remaining</Text> 
@@ -43,10 +50,13 @@ function HomeScreen({navigation}) {
             <Card style={styles. proposal}>
             <Text  style={styles.proposaltxt} onPress={onPress4}>Final Defence</Text> 
             </Card>
-            {/* <Card style={styles. proposal}>
-            <Text  style={styles.proposaltxt} onPress={onPress4}>Supervisor Check</Text> 
-            </Card> */}
+            <Card style={styles. proposal}>
+            <Text  style={styles.proposaltxt} onPress={onPress5}>Supervisor Check</Text> 
+            </Card>
+             </SafeAreaView>
+             </ScrollView>
     </View>
+     
   );
 }
 

@@ -13,6 +13,11 @@ import Prop from "../proposal/Proposal";
 import Sr from "../srs/Srs";
 import Mdef from "../mdefence/Mdefence";
 import Fdef from "../fdefence/Fdefence";
+import SuperBottom from "../supervisorscreen/Supervisorscreen";
+import Request from "../supervisorscreen/Studentrequest";
+import Studentinfo from "../supervisorscreen/Studentdetail";
+import Accept from "../supervisorscreen/Acceptedlist";
+import Profile from "../supervisorscreen/Studentprofile";
  
 
 const Stack = createNativeStackNavigator();
@@ -48,8 +53,12 @@ const StackNavigation = () => {
         <Stack.Screen name="Srs" component={Sr} />
         <Stack.Screen name="Mdefence" component={Mdef} />
         <Stack.Screen name="Fdefence" component={Fdef} />
-         
-
+        <Stack.Screen name="Supervisorscreen" component={ SuperBottom} />
+         {/* supervisor */}
+        <Stack.Screen name="Studentrequest" component={Request} />
+        <Stack.Screen name="Studentdetail" component={Studentinfo} />
+        <Stack.Screen name="Acceptedlist" component={ Accept} />
+        <Stack.Screen name="Studentprofile" component={ Profile} />
         {/* <Stack.Screen name="Group" component={Group} /> */}
        
       </Stack.Navigator>
