@@ -48,14 +48,13 @@ const ShowUserCard = (props) => {
       data: {
         groupid: "",
         groupstudents: [`${student._id}`, `${user._id}`],
-        
+
         groupsupervisor: "",
       },
     })
       .then((res) => {
         let editeduser = {
           groupid: res.data._id,
-          
         };
 
         users(`/${user._id}`, {
@@ -67,8 +66,20 @@ const ShowUserCard = (props) => {
         })
           .then((res) => {
             dispatch(setUser(res.data));
-            props?.callrefresh(!props?.refresh);
-            onRejectrequest()
+            users(`/${student._id}`, {
+              method: "patch",
+              data: editeduser,
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            })
+              .then((res) => {
+                props?.callrefresh(!props?.refresh);
+                onRejectrequest();
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           })
           .catch((err) => {
             console.log(err);
