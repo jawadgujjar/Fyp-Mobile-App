@@ -28,7 +28,7 @@ const StackNavigation = () => {
     return (
       <Stack.Navigator
         screenOptions={{
-          headerTitleAlign: "center",
+          headerTitleAlign: "center",statusBarAnimation
           headerTintColor: "white",
           headerLeftContainerStyle: { padding: 20 },
           headerRightContainerStyle: { padding: 20 },
