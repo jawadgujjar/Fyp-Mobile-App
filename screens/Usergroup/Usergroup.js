@@ -55,35 +55,6 @@ const ShowUserCard = (props) => {
               {student?.degree} {student?.department}
             </Text>
           </View>
-
-          <View
-            style={{
-              flexDirection: "column",
-              justifyContent: "space-between",
-              height: 70,
-            }}
-          >
-            <TouchableOpacity
-              onPress={onGroupcreate}
-              style={{
-                backgroundColor: "#6DE039",
-                padding: 5,
-                borderRadius: 5,
-              }}
-            >
-              <Text style={{ color: "white" }}>Accept</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={onRejectrequest}
-              style={{
-                backgroundColor: "#DF1B32",
-                padding: 5,
-                borderRadius: 5,
-              }}
-            >
-              <Text style={{ color: "white" }}>Reject</Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </Card>
     </View>

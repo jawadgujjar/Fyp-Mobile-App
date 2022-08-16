@@ -5,11 +5,12 @@ import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import { Card } from "react-native-paper";
 import { requests, users, groups } from "../../config/axios";
 import { useSelector } from "react-redux";
-import { TouchableOpacity } from "react-native-gesture-handler";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/user";
 
@@ -48,7 +49,6 @@ const ShowUserCard = (props) => {
       data: {
         groupid: "",
         groupstudents: [`${student._id}`, `${user._id}`],
-
         groupsupervisor: "",
       },
     })
