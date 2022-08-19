@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { Text, View,StyleSheet,Image,ScrollView,SafeAreaView} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Card, Badge } from "react-native-paper";
+import { Card, Badge,Button} from "react-native-paper";
 import Count from '../countdown/Countdown';
+import { useDispatch } from "react-redux";
+import { setLoginState } from "../../redux/user";
+ 
 // import Pro from '../profile/Profile';
 
 function HomeScreen({navigation}) {
+
   const onPress =()=>{
     navigation.navigate('Supervisorlist')
   }
@@ -70,6 +74,8 @@ function HomeScreen({navigation}) {
 // }
 
 function Profile({navigation}) {
+  const dispatch = useDispatch();
+  
   const onPress =()=>{
     navigation.navigate('Request')
   }
@@ -87,6 +93,9 @@ function Profile({navigation}) {
             <Card style={styles.card1} >
             <Text  style={styles.request} onPress={onPress1}> Group</Text> 
             </Card>
+            <Button style={styles.logoutbtn}  onPress={() => {   
+                dispatch(setLoginState(false));
+              }}> <Text style={styles.logout}>Log-out</Text> </Button>
           </View>  
     </View>
   );
@@ -158,5 +167,17 @@ proposaltxt:{
  fontWeight:'bold',
  marginTop:23,
  textAlign:'center',
+},
+logout:{
+textAlign:'center',
+marginTop:10,
+fontWeight:'bold',
+color:'red',
+
+},
+logoutbtn:{
+marginTop:20,
+borderRadius:1,
+ 
 },
 });
