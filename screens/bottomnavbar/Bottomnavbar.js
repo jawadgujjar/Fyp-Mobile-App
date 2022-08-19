@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import * as React from 'react';
 import { Text, View,StyleSheet,Image,ScrollView,SafeAreaView} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -28,44 +29,94 @@ function HomeScreen({navigation}) {
   const onPress5=()=>{
     navigation.navigate('Supervisorscreen')
   }
+=======
+import * as React from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Card, Badge, Button } from "react-native-paper";
+import Count from "../countdown/Countdown";
+import { useDispatch } from "react-redux";
+import { setLoginState } from "../../redux/user";
+// import Pro from '../profile/Profile';
+
+function HomeScreen({ navigation }) {
+  const onPress = () => {
+    navigation.navigate("Supervisorlist");
+  };
+  const onPress1 = () => {
+    navigation.navigate("Proposal");
+  };
+  const onPress2 = () => {
+    navigation.navigate("Srs");
+  };
+  const onPress3 = () => {
+    navigation.navigate("Mdefence");
+  };
+  const onPress4 = () => {
+    navigation.navigate("Fdefence");
+  };
+  const onPress5 = () => {
+    navigation.navigate("Supervisorscreen");
+  };
+>>>>>>> 46a309a5c8dc46e5b05d5edce9c312318e9ef08f
   return (
-     
-    <View >
+    <View>
       <ScrollView>
         <SafeAreaView>
-       
-      <Card style={styles.supervisor} >
-            <Text  style={styles.supervisortxt} onPress={onPress}> Select supervisor</Text> 
-            <Text  style={styles.time} >  Time Remaining</Text> 
-            <Count/>
+          <Card style={styles.supervisor}>
+            <Text style={styles.supervisortxt} onPress={onPress}>
+              {" "}
+              Select supervisor
+            </Text>
+            <Text style={styles.time}> Time Remaining</Text>
+            <Count />
             <View style={styles.logo}>
-                 <Image style={styles.lgu} source={require("../../assets/Rarrow.png")} />
-               </View>
-            </Card>
-            <Card style={styles. proposal}>
-            <Text  style={styles.proposaltxt} onPress={onPress1}>Project Proposal</Text> 
-            </Card>
-            <Card style={styles. proposal}>
-            <Text  style={styles.proposaltxt} onPress={onPress2}>SRS</Text> 
-            </Card>
-            <Card style={styles. proposal}>
-            <Text  style={styles.proposaltxt} onPress={onPress3}>Mid Defence</Text> 
-            </Card>
-            <Card style={styles. proposal}>
-            <Text  style={styles.proposaltxt} onPress={onPress4}>Final Defence</Text> 
-            </Card>
-            <Card style={styles. proposal}>
-            <Text  style={styles.proposaltxt} onPress={onPress5}>Supervisor Check</Text> 
-            </Card>
-             </SafeAreaView>
-             </ScrollView>
+              <Image
+                style={styles.lgu}
+                source={require("../../assets/Rarrow.png")}
+              />
+            </View>
+          </Card>
+          <Card style={styles.proposal}>
+            <Text style={styles.proposaltxt} onPress={onPress1}>
+              Project Proposal
+            </Text>
+          </Card>
+          <Card style={styles.proposal}>
+            <Text style={styles.proposaltxt} onPress={onPress2}>
+              SRS
+            </Text>
+          </Card>
+          <Card style={styles.proposal}>
+            <Text style={styles.proposaltxt} onPress={onPress3}>
+              Mid Defence
+            </Text>
+          </Card>
+          <Card style={styles.proposal}>
+            <Text style={styles.proposaltxt} onPress={onPress4}>
+              Final Defence
+            </Text>
+          </Card>
+          <Card style={styles.proposal}>
+            <Text style={styles.proposaltxt} onPress={onPress5}>
+              Supervisor Check
+            </Text>
+          </Card>
+        </SafeAreaView>
+      </ScrollView>
     </View>
-     
   );
 }
 
 // function SettingsScreen() {
-   
+
 //   return (
 //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 //       <Text>Settings!</Text>
@@ -73,23 +124,37 @@ function HomeScreen({navigation}) {
 //   );
 // }
 
+<<<<<<< HEAD
 function Profile({navigation}) {
   const dispatch = useDispatch();
   
   const onPress =()=>{
     navigation.navigate('Request')
   }
+=======
+function Profile({ navigation }) {
+  const dispatch = useDispatch();
 
-  const onPress1 =()=>{
-    navigation.navigate('Usergroup')
-  }
+  const onPress = () => {
+    navigation.navigate("Request");
+  };
+>>>>>>> 46a309a5c8dc46e5b05d5edce9c312318e9ef08f
+
+  const onPress1 = () => {
+    navigation.navigate("Usergroup");
+  };
   return (
-    <View  > 
-           <View>
-              <Card style={styles.card1} >
-            <Text  style={styles.request} onPress={onPress}> Requests</Text><Badge style={styles.badge} >3</Badge>
-            </Card>
+    <View>
+      <View>
+        <Card style={styles.card1}>
+          <Text style={styles.request} onPress={onPress}>
+            {" "}
+            Requests
+          </Text>
+          <Badge style={styles.badge}>3</Badge>
+        </Card>
 
+<<<<<<< HEAD
             <Card style={styles.card1} >
             <Text  style={styles.request} onPress={onPress1}> Group</Text> 
             </Card>
@@ -97,6 +162,23 @@ function Profile({navigation}) {
                 dispatch(setLoginState(false));
               }}> <Text style={styles.logout}>Log-out</Text> </Button>
           </View>  
+=======
+        <Card style={styles.card1}>
+          <Text style={styles.request} onPress={onPress1}>
+            {" "}
+            Group
+          </Text>
+        </Card>
+        <Button
+          style={styles.logoutbtn}
+          onPress={() => {
+            dispatch(setLoginState(false));
+          }}
+        >
+          <Text style={styles.logout}>Log-Out</Text>
+        </Button>
+      </View>
+>>>>>>> 46a309a5c8dc46e5b05d5edce9c312318e9ef08f
     </View>
   );
 }
@@ -113,6 +195,7 @@ export default function Bottom({ navigation }) {
   );
 }
 const styles = StyleSheet.create({
+<<<<<<< HEAD
 card1:{
   height:50,
   width:350,
@@ -181,3 +264,70 @@ borderRadius:1,
  
 },
 });
+=======
+  card1: {
+    height: 50,
+    width: 350,
+    marginTop: 30,
+    marginLeft: 5,
+    alignContent: "center",
+  },
+  request: {
+    marginTop: 10,
+    marginLeft: 20,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  badge: {
+    marginTop: -21,
+    marginRight: 10,
+  },
+  supervisor: {
+    height: 170,
+    width: 330,
+    marginTop: 30,
+    borderRadius: 7,
+    marginLeft: 15,
+  },
+  supervisortxt: {
+    marginTop: 25,
+    marginLeft: 30,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  time: {
+    marginLeft: 30,
+    marginTop: 30,
+  },
+  logo: {
+    marginLeft: 260,
+    marginTop: -95,
+  },
+  lgu: {
+    height: 40,
+    width: 40,
+  },
+  proposal: {
+    marginTop: 10,
+    height: 70,
+    width: 330,
+    marginLeft: 15,
+    borderRadius: 7,
+  },
+  proposaltxt: {
+    fontWeight: "bold",
+    marginTop: 23,
+    textAlign: "center",
+  },
+  logout: {
+    textAlign: "center",
+    marginTop: 10,
+    fontWeight: "bold",
+    color: "red",
+  },
+  logoutbtn: {
+    marginTop: 20,
+    borderRadius: 1,
+  },
+});
+>>>>>>> 46a309a5c8dc46e5b05d5edce9c312318e9ef08f

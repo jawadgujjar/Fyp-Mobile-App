@@ -5,58 +5,43 @@ import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
-  RefreshControl
+  RefreshControl,
+  TouchableOpacity,
 } from "react-native";
 import { Card } from "react-native-paper";
 import { requests, users } from "../../config/axios";
 import { useSelector } from "react-redux";
- 
-import { TouchableOpacity } from "react-native-gesture-handler";
-const wait = timeout => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
+
+// import { TouchableOpacity } from "react-native-gesture-handler";
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
 const ShowUserCard = (props) => {
-
   const authToken = useSelector((state) => state.user.authToken);
   const user = useSelector((state) => state.user.user);
-   
-
-
 
   const onsendreq = () => {
-
-
     const data = {
-
-      sentby:user._id,
-      sendto:props.data?._id
-
-    }
-
+      sentby: user._id,
+      sendto: props.data?._id,
+    };
 
     requests({
       method: "post",
-      
+
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
-      data:data
+      data: data,
     })
       .then(() => {
-
-
-       props.deleteSentRequestUser(props.data?._id)
-      
+        props.deleteSentRequestUser(props.data?._id);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    
-  
-  }; 
-
+  };
 
   return (
     <View>
@@ -94,14 +79,12 @@ const ShowUserCard = (props) => {
             >
               <Text style={{ color: "white" }}>Send Request</Text>
             </TouchableOpacity>
-            
           </View>
         </View>
       </Card>
     </View>
   );
-            
-            }
+};
 function Student() {
   const authToken = useSelector((state) => state.user.authToken);
   const user = useSelector((state) => state.user.user);
@@ -111,20 +94,15 @@ function Student() {
     setRefreshing(true);
   }, []);
 
-
   const [data, setdata] = useState([]);
   const [loading, setloading] = useState(false);
   const [tempoArray, settempoArray] = useState([]);
 
-
-  const deleteSentRequestUser = (id)=>{
-
+  const deleteSentRequestUser = (id) => {
     let d = data;
-     d= d.filter((d)=> d._id !== id)
-     setdata(d);
-
-
-  }
+    d = d.filter((d) => d._id !== id);
+    setdata(d);
+  };
 
   function filterUserData(comingData) {
     let d = comingData;
@@ -144,19 +122,15 @@ function Student() {
           for (let i = 0; i < res.data.data.length; i++) {
             for (let j = 0; j < d.length; j++) {
               if (res.data.data[i]?.sendto === d[j]._id) {
-
-                let id = d[j]._id
-                d = d.filter((d)=> d._id !== id )
+                let id = d[j]._id;
+                d = d.filter((d) => d._id !== id);
               }
             }
           }
           settempoArray(d);
-
-        }else {
+        } else {
           settempoArray(d);
-
         }
-
       })
       .catch((err) => {
         console.log(err);
@@ -177,26 +151,20 @@ function Student() {
         },
       })
         .then((res) => {
-
           if (res.data.data.length !== 0) {
             for (let i = 0; i < res.data.data.length; i++) {
               for (let j = 0; j < tempoArray.length; j++) {
                 if (res.data.data[i]?.sentby !== tempoArray[j]._id) {
                   temp.push(tempoArray[j]);
-
                 }
               }
               setdata(temp);
-
             }
           } else {
             setdata(tempoArray);
-
-
           }
           setloading(false);
           setRefreshing(false);
-
         })
         .catch((err) => {
           console.log(err);
@@ -218,7 +186,6 @@ function Student() {
     })
       .then((res) => {
         filterUserData(res.data.data);
-
       })
       .catch((err) => {
         console.log(err);
@@ -227,29 +194,32 @@ function Student() {
   }, [refreshing]);
 
   return (
-    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} >
-    <View style={styles.main}>
-
-      {loading ? (
-        <ActivityIndicator size="large" color="black" />
-      ) : (
-        <View>
-          {data.length === 0 ? (
-            <View>
-              <Text style={{ textAlign: "center" }}>
-                No students available!
-              </Text>
-            </View>
-          ) : (
-            <ScrollView>
-              {data.map((user, index) => (
-                <ShowUserCard key={index} data={user} deleteSentRequestUser={deleteSentRequestUser}  />
-              ))}
-            </ScrollView>
-          )}
-        </View>
-      )}
-    </View>
+    <RefreshControl refreshing={refreshing} onRefresh={onRefresh}>
+      <View style={styles.main}>
+        {loading ? (
+          <ActivityIndicator size="large" color="black" />
+        ) : (
+          <View>
+            {data.length === 0 ? (
+              <View>
+                <Text style={{ textAlign: "center" }}>
+                  No students available!
+                </Text>
+              </View>
+            ) : (
+              <ScrollView>
+                {data.map((user, index) => (
+                  <ShowUserCard
+                    key={index}
+                    data={user}
+                    deleteSentRequestUser={deleteSentRequestUser}
+                  />
+                ))}
+              </ScrollView>
+            )}
+          </View>
+        )}
+      </View>
     </RefreshControl>
   );
 }
