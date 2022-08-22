@@ -37,7 +37,6 @@ requests.interceptors.request.use(
   }
 );
 
-
 const groups = axios.create({
   baseURL: `${url}groups`,
 });
@@ -50,8 +49,16 @@ groups.interceptors.request.use(
   }
 );
 
+const schedules = axios.create({
+  baseURL: `${url}schedule`,
+});
+schedules.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
 
-
-
-
-export { login, users,requests, groups, };
+export { login, users, requests, groups, schedules };

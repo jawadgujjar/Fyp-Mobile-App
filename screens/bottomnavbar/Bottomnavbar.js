@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -8,13 +8,25 @@ import {
   SafeAreaView,
 } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { Card, Badge, Button } from "react-native-paper";
 import Count from "../countdown/Countdown";
 import { useDispatch } from "react-redux";
 import { setLoginState } from "../../redux/user";
+import { useSelector } from "react-redux";
+
+import { schedules } from "../../config/axios";
+
 // import Pro from '../profile/Profile';
 
 function HomeScreen({ navigation }) {
+  const authToken = useSelector((state) => state.user.authToken);
+  const user = useSelector((state) => state.user.user);
+
+  const [loading, setloading] = useState(false);
+
+  const [data, setdata] = useState({});
   const onPress = () => {
     navigation.navigate("Supervisorlist");
   };
@@ -33,49 +45,112 @@ function HomeScreen({ navigation }) {
   const onPress5 = () => {
     navigation.navigate("Supervisorscreen");
   };
+
+  useEffect(() => {
+    setloading(true);
+    schedules(`/${user.scheduleid}`, {
+      method: "get",
+
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+      .then((res) => {
+        setloading(false);
+
+        setdata(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setloading(false);
+      });
+  }, []);
+
   return (
     <View>
       <ScrollView>
         <SafeAreaView>
-          <Card style={styles.supervisor}>
-            <Text style={styles.supervisortxt} onPress={onPress}>
-              {" "}
-              Select supervisor
-            </Text>
-            <Text style={styles.time}> Time Remaining</Text>
-            <Count />
-            <View style={styles.logo}>
-              <Image
-                style={styles.lgu}
-                source={require("../../assets/Rarrow.png")}
-              />
+          {loading ? (
+            <View>
+              <Text>Loading...</Text>
             </View>
-          </Card>
-          <Card style={styles.proposal}>
-            <Text style={styles.proposaltxt} onPress={onPress1}>
-              Project Proposal
-            </Text>
-          </Card>
-          <Card style={styles.proposal}>
-            <Text style={styles.proposaltxt} onPress={onPress2}>
-              SRS
-            </Text>
-          </Card>
-          <Card style={styles.proposal}>
-            <Text style={styles.proposaltxt} onPress={onPress3}>
-              Mid Defence
-            </Text>
-          </Card>
-          <Card style={styles.proposal}>
-            <Text style={styles.proposaltxt} onPress={onPress4}>
-              Final Defence
-            </Text>
-          </Card>
-          <Card style={styles.proposal}>
-            <Text style={styles.proposaltxt} onPress={onPress5}>
-              Supervisor Check
-            </Text>
-          </Card>
+          ) : (
+            <View>
+              <Card style={styles.supervisor}>
+                <Text style={styles.supervisortxt} onPress={onPress}>
+                  {" "}
+                  Select supervisor
+                </Text>
+                <Text style={styles.time}> Time Remaining</Text>
+                {!loading && (
+                  <Count
+                    startingData={data?.supervisor?.startingdate}
+                    endingDate={data?.supervisor?.endingdate}
+                  />
+                )}
+
+                <View style={styles.logo}>
+                  <Image
+                    style={styles.lgu}
+                    source={require("../../assets/Rarrow.png")}
+                  />
+                </View>
+              </Card>
+              <Card style={styles.supervisor}>
+                <Text style={styles.supervisortxt} onPress={onPress1}>
+                  Project Proposal
+                </Text>
+                <Text style={styles.time}> Time Remaining</Text>
+                {!loading && (
+                  <Count
+                    startingData={data?.proposal?.startingdate}
+                    endingDate={data?.proposal?.endingdate}
+                  />
+                )}
+              </Card>
+              <Card style={styles.supervisor}>
+                <Text style={styles.supervisortxt} onPress={onPress2}>
+                  SRS
+                </Text>
+                <Text style={styles.time}> Time Remaining</Text>
+                {!loading && (
+                  <Count
+                    startingData={data?.srs?.startingdate}
+                    endingDate={data?.srs?.endingdate}
+                  />
+                )}
+              </Card>
+              <Card style={styles.supervisor}>
+                <Text style={styles.supervisortxt} onPress={onPress3}>
+                  Mid Defence
+                </Text>
+                <Text style={styles.time}> Time Remaining</Text>
+                {!loading && (
+                  <Count
+                    startingData={data?.middefence?.startingdate}
+                    endingDate={data?.middefence?.endingdate}
+                  />
+                )}
+              </Card>
+              <Card style={styles.supervisor}>
+                <Text style={styles.supervisortxt} onPress={onPress4}>
+                  Final Defence
+                </Text>
+                <Text style={styles.time}> Time Remaining</Text>
+                {!loading && (
+                  <Count
+                    startingData={data?.finaldefence?.startingdate}
+                    endingDate={data?.finaldefence?.endingdate}
+                  />
+                )}
+              </Card>
+              <Card style={styles.proposal}>
+                <Text style={styles.proposaltxt} onPress={onPress5}>
+                  Supervisor Check
+                </Text>
+              </Card>
+            </View>
+          )}
         </SafeAreaView>
       </ScrollView>
     </View>
@@ -136,9 +211,27 @@ const Tab = createBottomTabNavigator();
 export default function Bottom({ navigation }) {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen
+        name="Home"
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
+        component={HomeScreen}
+      />
       {/* <Tab.Screen name="Settings" component={SettingsScreen} /> */}
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen
+        name="Profile"
+        options={{
+          tabBarLabel: "Profile",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" color={color} size={size} />
+          ),
+        }}
+        component={Profile}
+      />
     </Tab.Navigator>
   );
 }
