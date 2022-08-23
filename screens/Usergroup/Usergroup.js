@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { groups, users } from "../../config/axios";
 import { useSelector } from "react-redux";
 import { Card } from "react-native-paper";
@@ -56,7 +56,7 @@ const ShowUserCard = (props) => {
             </Text>
           </View>
 
-          <View
+          {/* <View
             style={{
               flexDirection: "column",
               justifyContent: "space-between",
@@ -83,7 +83,7 @@ const ShowUserCard = (props) => {
             >
               <Text style={{ color: "white" }}>Reject</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </Card>
     </View>
@@ -95,6 +95,7 @@ function Usergroup() {
   const authToken = useSelector((state) => state.user.authToken);
 
   const [data, setdata] = useState([]);
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
     console.log(user.groupid);
@@ -116,10 +117,31 @@ function Usergroup() {
   return (
     <View>
       <View>
+        {loading ? (
+          <ActivityIndicator size="large" color="black" />
+        ) : (
+          <View>
+            {data.length === 0 ? (
+              <View>
+                <Text style={{ textAlign: "center" }}>
+                  You don't have any groups
+                </Text>
+              </View>
+            ) : (
+              <ScrollView>
+                {data.map((user) => (
+                  <ShowUserCard id={user} />
+                ))}
+              </ScrollView>
+            )}
+          </View>
+        )}
+      </View>
+      {/* <View>
         {data.map((user) => (
           <ShowUserCard id={user} />
         ))}
-      </View>
+      </View> */}
     </View>
   );
 }

@@ -11,7 +11,9 @@ import {
 import { Card } from "react-native-paper";
 import { requests, users } from "../../config/axios";
 import { useSelector } from "react-redux";
+import * as DocumentPicker from "expo-document-picker";
 
+// import { TouchableOpacity } from "react-native-gesture-handler";
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
@@ -21,6 +23,11 @@ const ShowUserCard = (props) => {
   const user = useSelector((state) => state.user.user);
 
   const onsendreq = () => {
+    _pickDocument = async () => {
+      let result = await DocumentPicker.getDocumentAsync({});
+      alert(result.uri);
+      console.log(result);
+    };
     const data = {
       sentby: user._id,
       sendto: props.data?._id,
@@ -56,12 +63,31 @@ const ShowUserCard = (props) => {
         >
           <View>
             <Text>Name: {props.data?.fullName}</Text>
-            <Text>Roll No: {props.data?.rollNumber}</Text>
+            <Text>Section: {props.data?.section}</Text>
             <Text>
               {props.data?.degree} {props.data?.department}
             </Text>
           </View>
 
+          {/* // */}
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <TouchableOpacity
+              onPress={() => this._pickDocument()}
+              style={{
+                padding: 10,
+                alignItems: "center",
+                width: "80%",
+                borderRadius: 10,
+                backgroundColor: "#d014",
+                marginTop: "15%",
+              }}
+            >
+              <Text>+ Add SRS File </Text>
+            </TouchableOpacity>
+          </View>
+          {/* / */}
           <View
             style={{
               flexDirection: "column",
@@ -84,7 +110,7 @@ const ShowUserCard = (props) => {
     </View>
   );
 };
-function Student() {
+function Supervisor2() {
   const authToken = useSelector((state) => state.user.authToken);
   const user = useSelector((state) => state.user.user);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -177,7 +203,7 @@ function Student() {
     users({
       method: "get",
       params: {
-        role: 2,
+        role: 1,
       },
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -202,7 +228,7 @@ function Student() {
             {data.length === 0 ? (
               <View>
                 <Text style={{ textAlign: "center" }}>
-                  No students available!
+                  No supervisor's available!
                 </Text>
               </View>
             ) : (
@@ -222,5 +248,5 @@ function Student() {
     </RefreshControl>
   );
 }
-export default Student;
+export default Supervisor2;
 const styles = StyleSheet.create({});

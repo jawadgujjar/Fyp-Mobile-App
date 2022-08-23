@@ -16,19 +16,15 @@ import { useDispatch } from "react-redux";
 import { setLoginState } from "../../redux/user";
 import { useSelector } from "react-redux";
 
-import { schedules } from "../../config/axios";
-
 // import Pro from '../profile/Profile';
 
 function HomeScreen({ navigation }) {
-  const authToken = useSelector((state) => state.user.authToken);
-  const user = useSelector((state) => state.user.user);
+  const schedule = useSelector((state) => state.user.schedule);
 
   const [loading, setloading] = useState(false);
 
-  const [data, setdata] = useState({});
   const onPress = () => {
-    navigation.navigate("Supervisorlist");
+    navigation.navigate("Requests");
   };
   const onPress1 = () => {
     navigation.navigate("Proposal");
@@ -46,24 +42,12 @@ function HomeScreen({ navigation }) {
     navigation.navigate("Supervisorscreen");
   };
 
+  const setLoadingFalse = () => {
+    setloading(false);
+  };
+
   useEffect(() => {
-    setloading(true);
-    schedules(`/${user.scheduleid}`, {
-      method: "get",
-
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-      .then((res) => {
-        setloading(false);
-
-        setdata(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        setloading(false);
-      });
+    setTimeout(setLoadingFalse, 1000);
   }, []);
 
   return (
@@ -84,8 +68,8 @@ function HomeScreen({ navigation }) {
                 <Text style={styles.time}> Time Remaining</Text>
                 {!loading && (
                   <Count
-                    startingData={data?.supervisor?.startingdate}
-                    endingDate={data?.supervisor?.endingdate}
+                    startingData={schedule?.supervisor?.startingdate}
+                    endingDate={schedule?.supervisor?.endingdate}
                   />
                 )}
 
@@ -103,8 +87,8 @@ function HomeScreen({ navigation }) {
                 <Text style={styles.time}> Time Remaining</Text>
                 {!loading && (
                   <Count
-                    startingData={data?.proposal?.startingdate}
-                    endingDate={data?.proposal?.endingdate}
+                    startingData={schedule?.proposal?.startingdate}
+                    endingDate={schedule?.proposal?.endingdate}
                   />
                 )}
               </Card>
@@ -115,8 +99,8 @@ function HomeScreen({ navigation }) {
                 <Text style={styles.time}> Time Remaining</Text>
                 {!loading && (
                   <Count
-                    startingData={data?.srs?.startingdate}
-                    endingDate={data?.srs?.endingdate}
+                    startingData={schedule?.srs?.startingdate}
+                    endingDate={schedule?.srs?.endingdate}
                   />
                 )}
               </Card>
@@ -127,8 +111,8 @@ function HomeScreen({ navigation }) {
                 <Text style={styles.time}> Time Remaining</Text>
                 {!loading && (
                   <Count
-                    startingData={data?.middefence?.startingdate}
-                    endingDate={data?.middefence?.endingdate}
+                    startingData={schedule?.middefence?.startingdate}
+                    endingDate={schedule?.middefence?.endingdate}
                   />
                 )}
               </Card>
@@ -139,8 +123,8 @@ function HomeScreen({ navigation }) {
                 <Text style={styles.time}> Time Remaining</Text>
                 {!loading && (
                   <Count
-                    startingData={data?.finaldefence?.startingdate}
-                    endingDate={data?.finaldefence?.endingdate}
+                    startingData={schedule?.finaldefence?.startingdate}
+                    endingDate={schedule?.finaldefence?.endingdate}
                   />
                 )}
               </Card>

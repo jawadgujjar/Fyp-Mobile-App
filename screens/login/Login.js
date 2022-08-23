@@ -8,9 +8,14 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { login } from "../../config/axios";
+import { login, schedules } from "../../config/axios";
 import { useDispatch } from "react-redux";
-import { setUser, setToken, setLoginState } from "../../redux/user";
+import {
+  setUser,
+  setToken,
+  setLoginState,
+  setschedule,
+} from "../../redux/user";
 
 function Login1() {
   const dispatch = useDispatch();
@@ -31,17 +36,30 @@ function Login1() {
       data: data,
     })
       .then((res) => {
-        console.log(res.data);
-        dispatch(setUser(res.data.user));
-        dispatch(setToken(res.data.accessToken));
-        dispatch(setLoginState(true));
-        setloading(false);
+        schedules(`/${res.data.user.scheduleid}`, {
+          method: "get",
+
+          headers: {
+            Authorization: `Bearer ${res.data.accessToken}`,
+          },
+        })
+          .then((response) => {
+            dispatch(setschedule(response.data));
+
+            dispatch(setUser(res.data.user));
+            dispatch(setToken(res.data.accessToken));
+            dispatch(setLoginState(true));
+            setloading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            setloading(false);
+          });
       })
       .catch((err) => {
         console.log(err);
         setloading(false);
-      })
-      
+      });
   };
 
   return (

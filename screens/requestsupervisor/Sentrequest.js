@@ -11,6 +11,7 @@ import {
 import { Card } from "react-native-paper";
 import { requests, users } from "../../config/axios";
 import { useSelector } from "react-redux";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -18,7 +19,7 @@ const wait = (timeout) => {
 
 const ShowUserCard = (props) => {
   const authToken = useSelector((state) => state.user.authToken);
-  const [student, setstudent] = useState({});
+  const [supervisor, setsupervisor] = useState({});
 
   useEffect(() => {
     users(`/${props.sendto}`, {
@@ -29,7 +30,7 @@ const ShowUserCard = (props) => {
       },
     })
       .then((res) => {
-        setstudent(res.data);
+        setsupervisor(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -68,10 +69,10 @@ const ShowUserCard = (props) => {
           }}
         >
           <View>
-            <Text>Name: {student?.fullName}</Text>
-            <Text>Roll No: {student?.rollNumber}</Text>
+            <Text>Name: {supervisor?.fullName}</Text>
+            <Text>Roll No: {supervisor?.rollNumber}</Text>
             <Text>
-              {student?.degree} {student?.department}
+              {supervisor?.degree} {supervisor?.department}
             </Text>
           </View>
 
@@ -93,7 +94,7 @@ const ShowUserCard = (props) => {
   );
 };
 
-function SentReq() {
+function SentReq2() {
   const authToken = useSelector((state) => state.user.authToken);
   const user = useSelector((state) => state.user.user);
 
@@ -160,5 +161,5 @@ function SentReq() {
     </RefreshControl>
   );
 }
-export default SentReq;
+export default SentReq2;
 const styles = StyleSheet.create({});
