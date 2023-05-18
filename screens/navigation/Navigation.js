@@ -47,6 +47,10 @@ const StackNavigation = () => {
 
         <Stack.Screen name="Request" component={Tab} />
         <Stack.Screen name="Requests" component={Tab2} />
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0d4addec2bafbd184d1cca1127a07db4cb0b5985
         <Stack.Screen name="Usergroup" component={Groups} />
         <Stack.Screen name="Supervisordetail" component={Teacherinfo} />
         <Stack.Screen name="Supervisorlist" component={Superlist} />

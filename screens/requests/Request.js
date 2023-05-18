@@ -10,7 +10,10 @@ import {
 import { Card } from "react-native-paper";
 import { requests, users, groups } from "../../config/axios";
 import { useSelector } from "react-redux";
+<<<<<<< HEAD
 // import { TouchableOpacity } from "react-native-gesture-handler";
+=======
+>>>>>>> 0d4addec2bafbd184d1cca1127a07db4cb0b5985
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/user";
 

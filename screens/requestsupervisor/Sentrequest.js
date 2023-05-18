@@ -19,7 +19,11 @@ const wait = (timeout) => {
 
 const ShowUserCard = (props) => {
   const authToken = useSelector((state) => state.user.authToken);
+<<<<<<< HEAD
   const [student, setstudent] = useState({});
+=======
+  const [supervisor, setsupervisor] = useState({});
+>>>>>>> 0d4addec2bafbd184d1cca1127a07db4cb0b5985
 
   useEffect(() => {
     users(`/${props.sendto}`, {
@@ -30,7 +34,11 @@ const ShowUserCard = (props) => {
       },
     })
       .then((res) => {
+<<<<<<< HEAD
         setstudent(res.data);
+=======
+        setsupervisor(res.data);
+>>>>>>> 0d4addec2bafbd184d1cca1127a07db4cb0b5985
       })
       .catch((err) => {
         console.log(err);
@@ -69,10 +77,17 @@ const ShowUserCard = (props) => {
           }}
         >
           <View>
+<<<<<<< HEAD
             <Text>Name: {student?.fullName}</Text>
             <Text>Roll No: {student?.rollNumber}</Text>
             <Text>
               {student?.degree} {student?.department}
+=======
+            <Text>Name: {supervisor?.fullName}</Text>
+            <Text>Roll No: {supervisor?.rollNumber}</Text>
+            <Text>
+              {supervisor?.degree} {supervisor?.department}
+>>>>>>> 0d4addec2bafbd184d1cca1127a07db4cb0b5985
             </Text>
           </View>
 

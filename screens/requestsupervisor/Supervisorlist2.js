@@ -13,9 +13,12 @@ import { requests, users } from "../../config/axios";
 import { useSelector } from "react-redux";
 import * as DocumentPicker from "expo-document-picker";
 
+<<<<<<< HEAD
  
  
 
+=======
+>>>>>>> 0d4addec2bafbd184d1cca1127a07db4cb0b5985
 // import { TouchableOpacity } from "react-native-gesture-handler";
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -25,14 +28,22 @@ const ShowUserCard = (props) => {
   const authToken = useSelector((state) => state.user.authToken);
   const user = useSelector((state) => state.user.user);
 
+<<<<<<< HEAD
 
   const onsendreq = () => {
 
+=======
+  const onsendreq = () => {
+>>>>>>> 0d4addec2bafbd184d1cca1127a07db4cb0b5985
     _pickDocument = async () => {
       let result = await DocumentPicker.getDocumentAsync({});
       alert(result.uri);
       console.log(result);
+<<<<<<< HEAD
   }
+=======
+    };
+>>>>>>> 0d4addec2bafbd184d1cca1127a07db4cb0b5985
     const data = {
       sentby: user._id,
       sendto: props.data?._id,
@@ -54,8 +65,11 @@ const ShowUserCard = (props) => {
       });
   };
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 0d4addec2bafbd184d1cca1127a07db4cb0b5985
   return (
     <View>
       <Card
@@ -136,8 +150,11 @@ function Supervisor2() {
     setdata(d);
   };
 
+<<<<<<< HEAD
    
 
+=======
+>>>>>>> 0d4addec2bafbd184d1cca1127a07db4cb0b5985
   function filterUserData(comingData) {
     let d = comingData;
     d = d.filter((d) => d._id !== user._id);

@@ -12,7 +12,10 @@ import { Card } from "react-native-paper";
 import { requests, users } from "../../config/axios";
 import { useSelector } from "react-redux";
 
+<<<<<<< HEAD
 // import { TouchableOpacity } from "react-native-gesture-handler";
+=======
+>>>>>>> 0d4addec2bafbd184d1cca1127a07db4cb0b5985
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };

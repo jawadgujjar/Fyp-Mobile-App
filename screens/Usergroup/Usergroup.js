@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { groups, users } from "../../config/axios";
 import { useSelector } from "react-redux";
 import { Card } from "react-native-paper";
@@ -55,6 +55,38 @@ const ShowUserCard = (props) => {
               {student?.degree} {student?.department}
             </Text>
           </View>
+<<<<<<< HEAD
+=======
+
+          {/* <View
+            style={{
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: 70,
+            }}
+          >
+            <TouchableOpacity
+              onPress={onGroupcreate}
+              style={{
+                backgroundColor: "#6DE039",
+                padding: 5,
+                borderRadius: 5,
+              }}
+            >
+              <Text style={{ color: "white" }}>Accept</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={onRejectrequest}
+              style={{
+                backgroundColor: "#DF1B32",
+                padding: 5,
+                borderRadius: 5,
+              }}
+            >
+              <Text style={{ color: "white" }}>Reject</Text>
+            </TouchableOpacity>
+          </View> */}
+>>>>>>> 0d4addec2bafbd184d1cca1127a07db4cb0b5985
         </View>
       </Card>
     </View>
@@ -66,6 +98,7 @@ function Usergroup() {
   const authToken = useSelector((state) => state.user.authToken);
 
   const [data, setdata] = useState([]);
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
     console.log(user.groupid);
@@ -87,10 +120,31 @@ function Usergroup() {
   return (
     <View>
       <View>
+        {loading ? (
+          <ActivityIndicator size="large" color="black" />
+        ) : (
+          <View>
+            {data.length === 0 ? (
+              <View>
+                <Text style={{ textAlign: "center" }}>
+                  You don't have any groups
+                </Text>
+              </View>
+            ) : (
+              <ScrollView>
+                {data.map((user) => (
+                  <ShowUserCard id={user} />
+                ))}
+              </ScrollView>
+            )}
+          </View>
+        )}
+      </View>
+      {/* <View>
         {data.map((user) => (
           <ShowUserCard id={user} />
         ))}
-      </View>
+      </View> */}
     </View>
   );
 }
