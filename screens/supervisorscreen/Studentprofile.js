@@ -18,7 +18,7 @@ export default function Profile() {
             <Text style={styles.name}>NAME: Student Name</Text>
           </View>
           <View>
-            <Text style={styles.session}>Student ID: Fall-18</Text>
+            <Text style={styles.session}>Student ID: Spring 19</Text>
           </View>
           <View>
             <Text style={styles.session}>Project Description:-</Text>

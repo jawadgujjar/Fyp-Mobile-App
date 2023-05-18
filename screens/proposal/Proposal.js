@@ -34,11 +34,11 @@ export default function Prop() {
             
           </View>
           <View>
-            <Text style={styles.session}>Group Members: Usama Ahmad & Jawad Ahmad</Text>
+            <Text style={styles.session}>Group Members: Asmat ullah&Waris Rehman</Text>
           </View>
 
           <View>
-            <Text style={styles.session}>Submission Time: Aug 18,2022</Text>
+            <Text style={styles.session}>Submission Time: April 18,2023</Text>
           </View>
 
           <View>

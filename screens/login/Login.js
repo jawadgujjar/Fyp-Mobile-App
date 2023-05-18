@@ -40,6 +40,7 @@ function Login1() {
       .catch((err) => {
         console.log(err);
         setloading(false);
+        alert("Please Enter correct information");
       })
       
   };

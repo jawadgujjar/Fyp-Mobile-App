@@ -18,6 +18,7 @@ import Request from "../supervisorscreen/Studentrequest";
 import Studentinfo from "../supervisorscreen/Studentdetail";
 import Accept from "../supervisorscreen/Acceptedlist";
 import Profile from "../supervisorscreen/Studentprofile";
+import Tab2 from "../requestsupervisor/Requests";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,7 @@ const StackNavigation = () => {
         <Stack.Screen name="Countdown" component={Count} />
 
         <Stack.Screen name="Request" component={Tab} />
+        <Stack.Screen name="Requests" component={Tab2} />
         <Stack.Screen name="Usergroup" component={Groups} />
         <Stack.Screen name="Supervisordetail" component={Teacherinfo} />
         <Stack.Screen name="Supervisorlist" component={Superlist} />

@@ -74,21 +74,21 @@ const ShowUserCard = (props) => {
               },
             })
               .then((res) => {
-<<<<<<< HEAD
+// <<<<<<< HEAD
                  props?.callrefresh(!props?.refresh);
                 onRejectrequest()
-=======
+// =======
                 props?.callrefresh(!props?.refresh);
                 onRejectrequest();
->>>>>>> 46a309a5c8dc46e5b05d5edce9c312318e9ef08f
+// >>>>>>> 46a309a5c8dc46e5b05d5edce9c312318e9ef08f
               })
               .catch((err) => {
                 console.log(err);
               });
-<<<<<<< HEAD
+// <<<<<<< HEAD
            
-=======
->>>>>>> 46a309a5c8dc46e5b05d5edce9c312318e9ef08f
+// =======
+// >>>>>>> 46a309a5c8dc46e5b05d5edce9c312318e9ef08f
           })
           .catch((err) => {
             console.log(err);
